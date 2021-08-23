@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">BreakingBad</string>
+
+    <string name="fragment_characters_details_name">Name: %1$s</string>
+    <string name="fragment_characters_details_occupation">Occupation: </string>
+    <string name="fragment_characters_details_status">Status: %1$s</string>
+    <string name="fragment_characters_details_nickname">Nickname: %1$s</string>
+    <string name="fragment_characters_details_appearance">Appearances: \n</string>
+    <string name="fragment_characters_filter_by_season">Filter by Season:</string>
+</resources>

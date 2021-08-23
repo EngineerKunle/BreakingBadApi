@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp">
+
+    <TextView
+        android:id="@+id/filter_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:text="@string/fragment_characters_filter_by_season"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/view_filter_season_one"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/one_season"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter_title" />
+
+    <ImageView
+        android:id="@+id/view_filter_season_two"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/two_season"
+        app:layout_constraintStart_toEndOf="@+id/view_filter_season_one"
+        app:layout_constraintTop_toBottomOf="@+id/filter_title" />
+
+    <ImageView
+        android:id="@+id/view_filter_season_three"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/three_season"
+        app:layout_constraintStart_toEndOf="@+id/view_filter_season_two"
+        app:layout_constraintTop_toBottomOf="@+id/filter_title" />
+
+    <ImageView
+        android:id="@+id/view_filter_season_four"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/four_season"
+        app:layout_constraintStart_toEndOf="@+id/view_filter_season_three"
+        app:layout_constraintTop_toBottomOf="@+id/filter_title" />
+
+    <ImageView
+        android:id="@+id/view_filter_season_five"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/five_season"
+        app:layout_constraintStart_toEndOf="@+id/view_filter_season_four"
+        app:layout_constraintTop_toBottomOf="@+id/filter_title" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
