@@ -72,14 +72,14 @@ class CharactersFragment : Fragment(R.layout.fragment_characters), SearchView.On
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         model.filterCharacters(query!!).observe(viewLifecycleOwner) { characters ->
-            charactersAdapter.updateCharacters(characters)
+            charactersAdapter.setData(characters)
         }
         return false
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
         model.filterCharacters(newText!!).observe(viewLifecycleOwner) { characters ->
-            charactersAdapter.updateCharacters(characters)
+            charactersAdapter.setData(characters)
         }
         return false
     }
@@ -87,31 +87,31 @@ class CharactersFragment : Fragment(R.layout.fragment_characters), SearchView.On
     private fun setUpFilterUi() {
         binding.fragmentCharactersSeasonFilter.viewFilterSeasonOne.setOnClickListener {
             model.filterBySeason(SeasonFilter.SEASON_1).observe(viewLifecycleOwner) { characters ->
-                charactersAdapter.updateCharacters(characters)
+                charactersAdapter.setData(characters)
             }
         }
 
         binding.fragmentCharactersSeasonFilter.viewFilterSeasonTwo.setOnClickListener {
             model.filterBySeason(SeasonFilter.SEASON_2).observe(viewLifecycleOwner) { characters ->
-                charactersAdapter.updateCharacters(characters)
+                charactersAdapter.setData(characters)
             }
         }
 
         binding.fragmentCharactersSeasonFilter.viewFilterSeasonThree.setOnClickListener {
             model.filterBySeason(SeasonFilter.SEASON_3).observe(viewLifecycleOwner) { characters ->
-                charactersAdapter.updateCharacters(characters)
+                charactersAdapter.setData(characters)
             }
         }
 
         binding.fragmentCharactersSeasonFilter.viewFilterSeasonFour.setOnClickListener {
             model.filterBySeason(SeasonFilter.SEASON_4).observe(viewLifecycleOwner) { characters ->
-                charactersAdapter.updateCharacters(characters)
+                charactersAdapter.setData(characters)
             }
         }
 
         binding.fragmentCharactersSeasonFilter.viewFilterSeasonFive.setOnClickListener {
             model.filterBySeason(SeasonFilter.SEASON_5).observe(viewLifecycleOwner) { characters ->
-                charactersAdapter.updateCharacters(characters)
+                charactersAdapter.setData(characters)
             }
         }
     }

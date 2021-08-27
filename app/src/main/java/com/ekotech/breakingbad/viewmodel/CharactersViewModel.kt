@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ekotech.breakingbad.data.domain.BreakingBadCharacters
 import com.ekotech.breakingbad.data.repository.CharactersRepository
 import com.ekotech.breakingbad.viewstate.CharactersModel
 import com.ekotech.breakingbad.viewstate.CharactersViewState
@@ -63,7 +62,7 @@ class CharactersViewModel @Inject constructor(
         }
     }
 
-    fun filterBySeason(season: SeasonFilter): LiveData<MutableList<CharactersModel>>  {
+    fun filterBySeason(season: SeasonFilter): LiveData<MutableList<CharactersModel>> {
         return Transformations.switchMap(_filterCharactersData) { characters ->
             val data = MutableLiveData<MutableList<CharactersModel>>()
             val list = characters.filter {

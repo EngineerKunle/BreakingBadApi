@@ -6,9 +6,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ekotech.breakingbad.R
+import com.ekotech.breakingbad.utils.CharactersModelDiffCallback
 import com.ekotech.breakingbad.viewstate.CharactersModel
 
 class CharactersAdapter(val action: (CharactersModel) -> Unit) : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
@@ -25,10 +27,12 @@ class CharactersAdapter(val action: (CharactersModel) -> Unit) : RecyclerView.Ad
 
     override fun getItemCount(): Int = characters.size
 
-    fun updateCharacters(filteredCharacters: MutableList<CharactersModel>) {
+    fun setData(newCharacters: MutableList<CharactersModel>) {
+        val diffCallback = CharactersModelDiffCallback(characters, newCharacters)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         characters.clear()
-        characters.addAll(filteredCharacters)
-        notifyDataSetChanged()
+        characters.addAll(newCharacters)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
