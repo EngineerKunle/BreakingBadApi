@@ -1,15 +1,7 @@
 package com.ekotech.breakingbad.viewstate
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@Parcelize
-data class CharactersViewState(
-    val id: Int,
-    val name: String,
-    val imageURl: String,
-    val occupation: List<String>,
-    val status: String,
-    val nickName: String,
-    val seasonAppearance: List<Int>
-) : Parcelable
+sealed class CharactersViewState {
+    object LoadingState : CharactersViewState()
+    data class Success(val data: List<CharactersModel>) : CharactersViewState()
+    data class Error(val error: String = "Loading fail") : CharactersViewState()
+}

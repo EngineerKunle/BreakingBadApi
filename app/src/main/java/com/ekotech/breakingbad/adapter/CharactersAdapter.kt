@@ -9,10 +9,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ekotech.breakingbad.R
-import com.ekotech.breakingbad.viewstate.CharactersViewState
+import com.ekotech.breakingbad.viewstate.CharactersModel
 
-class CharactersAdapter(val action: (CharactersViewState) -> Unit) : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
-    var characters: MutableList<CharactersViewState> = ArrayList()
+class CharactersAdapter(val action: (CharactersModel) -> Unit) : RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
+    var characters: MutableList<CharactersModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -25,7 +25,7 @@ class CharactersAdapter(val action: (CharactersViewState) -> Unit) : RecyclerVie
 
     override fun getItemCount(): Int = characters.size
 
-    fun updateCharacters(filteredCharacters: MutableList<CharactersViewState>) {
+    fun updateCharacters(filteredCharacters: MutableList<CharactersModel>) {
         characters.clear()
         characters.addAll(filteredCharacters)
         notifyDataSetChanged()
@@ -36,7 +36,7 @@ class CharactersAdapter(val action: (CharactersViewState) -> Unit) : RecyclerVie
         private val image: ImageView = view.findViewById(R.id.item_characters_image)
         private val container: ConstraintLayout = view.findViewById(R.id.item_characters_container)
 
-        fun bind(character: CharactersViewState) {
+        fun bind(character: CharactersModel) {
             title.text = character.name
             Glide
                 .with(view)

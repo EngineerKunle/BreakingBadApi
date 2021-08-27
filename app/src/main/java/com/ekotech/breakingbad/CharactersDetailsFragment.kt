@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.ekotech.breakingbad.databinding.FragmentCharactersDetailsBinding
-import com.ekotech.breakingbad.viewstate.CharactersViewState
+import com.ekotech.breakingbad.viewstate.CharactersModel
 import dagger.hilt.android.AndroidEntryPoint
 import viewBinding
 
@@ -16,7 +16,7 @@ class CharactersDetailsFragment : Fragment(R.layout.fragment_characters_details)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val state = arguments?.getParcelable<CharactersViewState>(VIEW_STATE)
+        val state = arguments?.getParcelable<CharactersModel>(VIEW_STATE)
 
         state?.let {
             Glide
@@ -28,25 +28,25 @@ class CharactersDetailsFragment : Fragment(R.layout.fragment_characters_details)
         }
     }
 
-    private fun textDetailsSetUp(viewState: CharactersViewState) {
+    private fun textDetailsSetUp(model: CharactersModel) {
         with(binding) {
-            fragmentCharactersDetailsName.text = getString(R.string.fragment_characters_details_name, viewState.name)
+            fragmentCharactersDetailsName.text = getString(R.string.fragment_characters_details_name, model.name)
 
             val occupation = StringBuilder()
             occupation.append(getString(R.string.fragment_characters_details_occupation))
 
-            viewState.occupation.forEach {
+            model.occupation.forEach {
                 occupation.append("$it, ")
             }
             fragmentCharactersDetailsOccupation.text = occupation
 
-            fragmentCharactersDetailsStatus.text = getString(R.string.fragment_characters_details_status, viewState.status)
-            fragmentCharactersDetailsNickname.text = getString(R.string.fragment_characters_details_nickname, viewState.nickName)
+            fragmentCharactersDetailsStatus.text = getString(R.string.fragment_characters_details_status, model.status)
+            fragmentCharactersDetailsNickname.text = getString(R.string.fragment_characters_details_nickname, model.nickName)
 
             val appearancesBuilder = StringBuilder()
             appearancesBuilder.append(getString(R.string.fragment_characters_details_appearance))
 
-            viewState.seasonAppearance.forEach {
+            model.seasonAppearance.forEach {
                 appearancesBuilder.append("$it \n")
             }
 
@@ -55,9 +55,9 @@ class CharactersDetailsFragment : Fragment(R.layout.fragment_characters_details)
     }
 
     companion object {
-        fun newInstance(viewState: CharactersViewState) = CharactersDetailsFragment().apply {
+        fun newInstance(model: CharactersModel) = CharactersDetailsFragment().apply {
             arguments = Bundle().apply {
-                putParcelable(VIEW_STATE, viewState)
+                putParcelable(VIEW_STATE, model)
             }
         }
 

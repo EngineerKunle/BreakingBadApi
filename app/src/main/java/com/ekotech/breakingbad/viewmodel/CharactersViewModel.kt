@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ekotech.breakingbad.data.domain.BreakingBadCharacters
 import com.ekotech.breakingbad.data.repository.CharactersRepository
+import com.ekotech.breakingbad.viewstate.CharactersModel
+import com.ekotech.breakingbad.viewstate.CharactersViewState
 import com.ekotech.breakingbad.viewstate.SeasonFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,10 +19,10 @@ class CharactersViewModel @Inject constructor(
     private val charactersRepository: CharactersRepository
 ) : ViewModel() {
 
-    private val _charactersData = MutableLiveData<MutableList<BreakingBadCharacters>>()
-    val charactersData = _charactersData
+    private val _charactersViewState = MutableLiveData<CharactersViewState>(CharactersViewState.LoadingState)
+    val charactersViewState = _charactersViewState
 
-    private var _filterCharactersData = MutableLiveData<MutableList<BreakingBadCharacters>>()
+    private var _filterCharactersData = MutableLiveData<List<CharactersModel>>(emptyList())
 
     init {
         loadCharacters()
@@ -28,30 +30,47 @@ class CharactersViewModel @Inject constructor(
 
     private fun loadCharacters() {
         viewModelScope.launch {
-            val charactersGET = charactersRepository.getCharacters().toMutableList()
-            _charactersData.postValue(charactersGET)
+            try {
+                charactersRepository.getCharacters().let {
+                    _charactersViewState.value = CharactersViewState.Success(it.map { breakingBadCharacters ->
+                        CharactersModel(
+                            breakingBadCharacters.id,
+                            breakingBadCharacters.name,
+                            breakingBadCharacters.image,
+                            breakingBadCharacters.occupation,
+                            breakingBadCharacters.status,
+                            breakingBadCharacters.nickname,
+                            breakingBadCharacters.seasonAppearance
+                        )
+                    })
+
+                    _filterCharactersData.value = (_charactersViewState.value as CharactersViewState.Success).data
+                }
+            } catch (e: Exception) {
+                _charactersViewState.value = CharactersViewState.Error()
+            }
         }
     }
 
-    fun filterCharacters(query: String): LiveData<MutableList<BreakingBadCharacters>> {
-        return Transformations.switchMap(_charactersData) { characters ->
-            _filterCharactersData = MutableLiveData()
-            val filteredList = characters.filter {
+    fun filterCharacters(query: String): LiveData<MutableList<CharactersModel>> {
+        return Transformations.switchMap(_filterCharactersData) { characters ->
+            val data = MutableLiveData<MutableList<CharactersModel>>()
+            val list = characters.filter {
                 it.name.contains(query, ignoreCase = true)
-            }
-            _filterCharactersData.postValue(filteredList.toMutableList())
-            _filterCharactersData
+            }.toMutableList()
+            data.postValue(list)
+            data
         }
     }
 
-    fun filterBySeason(season: SeasonFilter): LiveData<MutableList<BreakingBadCharacters>> {
-        return Transformations.switchMap(_charactersData) { characters ->
-            _filterCharactersData = MutableLiveData()
-            val filteredList = characters.filter {
+    fun filterBySeason(season: SeasonFilter): LiveData<MutableList<CharactersModel>>  {
+        return Transformations.switchMap(_filterCharactersData) { characters ->
+            val data = MutableLiveData<MutableList<CharactersModel>>()
+            val list = characters.filter {
                 it.seasonAppearance.contains(season.number)
-            }
-            _filterCharactersData.postValue(filteredList.toMutableList())
-            _filterCharactersData
+            }.toMutableList()
+            data.postValue(list)
+            data
         }
     }
 }

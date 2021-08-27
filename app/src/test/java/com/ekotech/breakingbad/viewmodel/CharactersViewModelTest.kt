@@ -41,7 +41,7 @@ class CharactersViewModelTest {
     @Test
     fun `given list of character when lists is filtered by query then display new list`() {
         val result = viewModel.filterCharacters("W")
-        assertEquals(result.getOrAwaitValue().size, 1)
+        assertEquals(result.getOrAwaitValue().size, 1   )
     }
 
     @Test
