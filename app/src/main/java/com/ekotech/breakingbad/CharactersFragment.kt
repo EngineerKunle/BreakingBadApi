@@ -34,11 +34,9 @@ class CharactersFragment : Fragment(R.layout.fragment_characters), SearchView.On
 
                 is CharactersViewState.Success -> {
                     binding.fragmentCharactersProgressBar.visibility = View.GONE
-                    charactersAdapter = CharactersAdapter {
+                    charactersAdapter = CharactersAdapter { model ->
                         activity?.let { activity ->
-                            state.data.forEach {
-                                startDetailsFragment(activity, it)
-                            }
+                            startDetailsFragment(activity, model)
                             binding.fragmentCharactersSearch.setQuery("", false)
                         }
                     }.apply {
