@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ekotech.breakingbad.data.repository.CharactersRepository
+import com.ekotech.breakingbad.data.usecase.GetCharacters
 import com.ekotech.breakingbad.viewstate.CharactersModel
 import com.ekotech.breakingbad.viewstate.CharactersViewState
 import com.ekotech.breakingbad.viewstate.SeasonFilter
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharactersViewModel @Inject constructor(
-    private val charactersRepository: CharactersRepository
+    private val getCharacters: GetCharacters
 ) : ViewModel() {
 
     private val _charactersViewState = MutableLiveData<CharactersViewState>(CharactersViewState.LoadingState)
@@ -30,7 +31,7 @@ class CharactersViewModel @Inject constructor(
     private fun loadCharacters() {
         viewModelScope.launch {
             try {
-                charactersRepository.getCharacters().let {
+                getCharacters().let {
                     _charactersViewState.value = CharactersViewState.Success(it.map { breakingBadCharacters ->
                         CharactersModel(
                             breakingBadCharacters.id,

@@ -2,7 +2,7 @@ package com.ekotech.breakingbad.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ekotech.breakingbad.data.domain.BreakingBadCharacters
-import com.ekotech.breakingbad.data.repository.CharactersRepository
+import com.ekotech.breakingbad.data.usecase.GetCharacters
 import com.ekotech.breakingbad.viewmodel.utils.getOrAwaitValue
 import com.ekotech.breakingbad.viewstate.SeasonFilter
 import io.mockk.coEvery
@@ -26,22 +26,22 @@ class CharactersViewModelTest {
     var rule: TestRule = InstantTaskExecutorRule()
 
     lateinit var viewModel: CharactersViewModel
-    private lateinit var charactersRepository: CharactersRepository
+    private lateinit var characters: GetCharacters
 
     private val dispatcher = TestCoroutineDispatcher()
 
     @Before
     fun setUp() {
         Dispatchers.setMain(dispatcher)
-        charactersRepository = mockk(relaxed = true)
-        coEvery { charactersRepository.getCharacters() } returns characters()
-        viewModel = CharactersViewModel(charactersRepository)
+        characters = mockk(relaxed = true)
+        coEvery { characters() } returns mockCharacters()
+        viewModel = CharactersViewModel(characters)
     }
 
     @Test
     fun `given list of character when lists is filtered by query then display new list`() {
         val result = viewModel.filterCharacters("W")
-        assertEquals(result.getOrAwaitValue().size, 1   )
+        assertEquals(result.getOrAwaitValue().size, 1)
     }
 
     @Test
@@ -56,7 +56,7 @@ class CharactersViewModelTest {
         Dispatchers.resetMain()
     }
 
-    private fun characters(): List<BreakingBadCharacters> = listOf(
+    private fun mockCharacters(): List<BreakingBadCharacters> = listOf(
         BreakingBadCharacters(1, "walker.png", "Walter", occupationsWalt(), "Alive", "King", seasonsWalt()),
         BreakingBadCharacters(2, "hank.png", "Hank", occupationsHank(), "Dead", "Police", seasonsHank()),
     )
