@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ekotech.breakingbad.data.repository.CharactersRepository
 import com.ekotech.breakingbad.data.usecase.GetCharacters
 import com.ekotech.breakingbad.viewstate.CharactersModel
 import com.ekotech.breakingbad.viewstate.CharactersViewState
