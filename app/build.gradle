@@ -85,6 +85,13 @@ dependencies {
     def jsonVersion = "2.8.6"
     implementation "com.google.code.gson:gson:$jsonVersion"
 
+    //Room
+    def roomVersion = "2.3.0"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor "androidx.room:room-compiler:$roomVersion"
+    kapt("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2'
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
