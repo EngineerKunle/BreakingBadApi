@@ -2,8 +2,9 @@ package com.ekotech.breakingbad.data.repository
 
 import com.ekotech.breakingbad.data.api.ApiService
 import com.ekotech.breakingbad.data.domain.BreakingBadCharacters
-import com.ekotech.breakingbad.data.local.BreakingBadCharactersLocal
+import com.ekotech.breakingbad.data.domain.toLocal
 import com.ekotech.breakingbad.data.local.dao.BreakingBadCharactersDao
+import com.ekotech.breakingbad.data.local.toDomain
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -16,31 +17,14 @@ class CharactersRepositoryImpl @Inject constructor(private val service: ApiServi
             if (localData.isEmpty()) {
                 service.getCharacters().also { characters ->
                     return@also charactersDao.insertAllCharacters(characters.map {
-                        BreakingBadCharactersLocal(
-                            it.id,
-                            it.image,
-                            it.name,
-                            it.occupation,
-                            it.status,
-                            it.nickname,
-                            it.seasonAppearance
-                        )
+                        it.toLocal()
                     })
                 }
             } else {
                 return@withContext localData.map {
-                    BreakingBadCharacters(
-                        it.id,
-                        it.image,
-                        it.name,
-                        it.occupation!!,
-                        it.status,
-                        it.nickname,
-                        it.seasonAppearance!!
-                    )
+                    it.toDomain()
                 }
             }
         }
     }
 }
-

@@ -1,5 +1,6 @@
 package com.ekotech.breakingbad.data.domain
 
+import com.ekotech.breakingbad.data.local.BreakingBadCharactersLocal
 import com.google.gson.annotations.SerializedName
 
 data class BreakingBadCharacters(
@@ -17,4 +18,14 @@ data class BreakingBadCharacters(
     val nickname: String,
     @SerializedName("appearance")
     val seasonAppearance: List<Int>
+)
+
+fun BreakingBadCharacters.toLocal() = BreakingBadCharactersLocal(
+    this.id,
+    this.image,
+    this.name,
+    this.occupation,
+    this.status,
+    this.nickname,
+    this.seasonAppearance
 )
