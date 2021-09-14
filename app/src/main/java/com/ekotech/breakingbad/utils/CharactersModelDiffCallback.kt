@@ -3,6 +3,7 @@ package com.ekotech.breakingbad.utils
 import androidx.recyclerview.widget.DiffUtil
 import com.ekotech.breakingbad.viewstate.CharactersModel
 
+//Change this to list extension function
 class CharactersModelDiffCallback(private val oldList: MutableList<CharactersModel>, private val newList: MutableList<CharactersModel>) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size
